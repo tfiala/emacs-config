@@ -1,8 +1,14 @@
 ;; load marmalade package manager
 (require 'package)
 (add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/"))
+             '("melpa" . "http://melpa.milkbox.net/packages/"))
+(add-to-list 'package-archives
+             '("org" . "http://orgmode.org/elpa/"))
+
 (package-initialize)
+
+(when (not package-archive-contents)
+  (package-refresh-contents))
 
 ;; ensure required packages are loaded
 (defvar my-packages '(starter-kit
@@ -12,7 +18,8 @@
                       clojure-mode
                       clojure-test-mode
                       magit
-                      nrepl))
+                      nrepl
+                      org))
 
 (dolist (p my-packages)
   (when (not (package-installed-p p))
