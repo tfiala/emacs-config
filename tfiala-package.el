@@ -1,3 +1,5 @@
+(require 'package)
+
 (defun tfiala-load-package-list
     (package-list)
 
@@ -6,8 +8,6 @@
                '("melpa" . "http://melpa.milkbox.net/packages/"))
   (add-to-list 'package-archives
                '("org" . "http://orgmode.org/elpa/"))
-  (add-to-list 'package-archives
-               '("marmalade" . "http://marmalade-repo.org/packages/"))
   
   ;; load these now, not after the init/customization loop
   ;; (see http://www.gnu.org/software/emacs/manual/html_node/emacs/Package-Installation.html)

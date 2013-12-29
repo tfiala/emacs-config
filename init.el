@@ -1,12 +1,11 @@
-;; add current directory to load path
-(let ((script-dir (file-name-directory (file-truename load-file-name))))
-  (add-to-list 'load-path script-dir))
-
 (require 'tfiala-bootstrap)
+;; (load "tfiala-bootstrap")
 
 (tfiala-per-machine-pre)
 
 (require 'tfiala-package)
+;; (load "tfiala-package")
+
 (let ((packages
        '(starter-kit
          starter-kit-lisp
@@ -14,9 +13,9 @@
          starter-kit-eshell
          clojure-mode
          clojure-test-mode
+	 cider
          color-theme
          magit
-         nrepl
          org
          slime
          )))
@@ -64,5 +63,6 @@
   (file-exists-p (trf-vc-filename vc-relative-filename)))
 
 (require 'slime-config)
+;;(load "slime-config")
 
 (tfiala-per-machine-post)
