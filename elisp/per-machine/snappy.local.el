@@ -1,6 +1,10 @@
+(require 'color-theme)
+(defvar tfiala-keyboard-use-kinesis)
+(defvar installed-lisps)
+
 (defun local-dot-emacs-pre ()
   (print (concat "starting local-dot-emacs-pre for " (system-name)))
-  (setq local-dot-emacs-use-kinesis nil)
+  (setq tfiala-keyboard-use-kinesis nil)
   (setq installed-lisps
         '((acl-smp-a ("/lisps/acl90-smp.64/alisp"))
           (acl-smp-m ("/lisps/acl90-smp.64/mlisp"))

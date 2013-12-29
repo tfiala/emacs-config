@@ -1,10 +1,8 @@
-(require 'tfiala-bootstrap)
-;; (load "tfiala-bootstrap")
-
-(tfiala-per-machine-pre)
+;; add our elisp dir
+(let ((elisp-dir (concat (file-name-directory load-file-name) "elisp")))
+  (add-to-list 'load-path elisp-dir))
 
 (require 'tfiala-package)
-;; (load "tfiala-package")
 
 (let ((packages
        '(starter-kit
@@ -21,6 +19,9 @@
          )))
   (tfiala-load-package-list packages))
 
+(require 'tfiala-bootstrap)
+(tfiala-per-machine-pre)
+
 ;; minimal keyboard setup
 (when (eq system-type 'darwin)
   (setq mac-control-modifier 'ctrl)
@@ -34,23 +35,7 @@
 ;; disable the ugly visible bell
 (setq visible-bell nil)
 
-;; org setup
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
-
-(unless (boundp 'org-agenda-files)
-  (setq org-agenda-files '()))
-(let ((org-dir (concat (getenv "HOME") "/Google Drive/org")))
-  (when (file-exists-p org-dir)
-    (add-to-list 'org-agenda-files org-dir)))
-
-(setq org-catch-invisible-edits 'show-and-error)
-(setq org-startup-indented t)
-(setq org-todo-keywords
-      '((sequence "WAITING(w)" "TODO(t)" "|" "DONE(d)")
-        (sequence "|" "CANCELED(c)")))
+(require 'tfiala-org-config)
 
 ;; set ispell
 (setq-default ispell-program-name "/usr/local/bin/aspell")
@@ -62,7 +47,7 @@
 (defun trf-vc-file-exists-p (vc-relative-filename)
   (file-exists-p (trf-vc-filename vc-relative-filename)))
 
-(require 'slime-config)
+(require 'tfiala-slime-config)
 ;;(load "slime-config")
 
 (tfiala-per-machine-post)
