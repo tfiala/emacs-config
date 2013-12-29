@@ -15,9 +15,9 @@
   (color-theme-initialize)
   
   ; (color-theme-blue-sea)
-  (color-theme-robin-hood)
+  ; (color-theme-robin-hood)
   ; (color-theme-subtle-blue)
-  ; (color-theme-gnome2)
+  (color-theme-gnome2)
   ; (color-theme-blue-mood)
   ; (color-theme-clarity)
   (print (concat "finishing local-dot-emacs-post for " (system-name))))

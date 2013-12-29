@@ -18,10 +18,11 @@
       ;; found a lisp, we can setup 
       (require 'slime-autoloads)
 
-      ;; haven't figured out how to capture this yet since eval-after-load
-      ;; doesn't seem to capture this.
       (setq slime-config/available-lisps available-lisps)
-
+      ;; setup the slime vars that support multiple lisps
+      (setq slime-lisp-implementations slime-config/available-lisps)
+      (setq slime-default-lisp (caar slime-config/available-lisps))
+      
       (eval-after-load "slime"
         '(progn
            (slime-setup '(slime-fancy slime-banner slime-editing-commands))
@@ -29,10 +30,6 @@
            (setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
 
            ;; bind some global keys
-           (global-set-key (kbd "C-c s") 'slime-selector)
-
-           ;; setup the slime vars that support multiple lisps
-           (setq slime-lisp-implementations slime-config/available-lisps)
-           (setq slime-default-lisp (caar slime-config/available-lisps)))))))
+           (global-set-key (kbd "C-c s") 'slime-selector))))))
 
 (provide 'slime-config)

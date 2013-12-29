@@ -14,7 +14,7 @@
          starter-kit-eshell
          clojure-mode
          clojure-test-mode
-         ;; cperl-mode
+         color-theme
          magit
          nrepl
          org
@@ -63,24 +63,6 @@
 (defun trf-vc-file-exists-p (vc-relative-filename)
   (file-exists-p (trf-vc-filename vc-relative-filename)))
 
-;; setup go mode
-(when (trf-vc-file-exists-p "go-mode/go-mode-load.el")
-  (add-to-list 'load-path (trf-vc-filename "go-mode"))
-  ;; (require 'go-mode-load)
-  (require 'go-mode)
-  )
-
 (require 'slime-config)
-;;
-;; setup slime mode
-;;
-;; (setq inferior-lisp-program "/lisps/acl90-smp.64/alisp")
-;; (require 'slime-autoloads)
 
-;; (eval-after-load "slime"
-;;   '(progn
-;;      (slime-setup '(slime-fancy slime-banner))
-;;      (setq slime-complete-symbol*-fancy t)
-;;      (setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)))
-
-;; (tfiala-per-machine-post)
+(tfiala-per-machine-post)
