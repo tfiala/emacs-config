@@ -1,39 +1,26 @@
-;; load marmalade package manager
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/"))
-(add-to-list 'package-archives
-             '("org" . "http://orgmode.org/elpa/"))
+;; add current directory to load path
+(let ((script-dir (file-name-directory (file-truename load-file-name))))
+  (add-to-list 'load-path script-dir))
 
-;; load these now, not after the init/customization loop
-;; (see http://www.gnu.org/software/emacs/manual/html_node/emacs/Package-Installation.html)
-(package-initialize)
-(setq package-enable-at-startup nil)
+(require 'tfiala-bootstrap)
 
-(when (not package-archive-contents)
-  (package-refresh-contents))
+(tfiala-per-machine-pre)
 
-;; ensure required packages are loaded
-(defvar my-packages '(starter-kit
-                      starter-kit-lisp
-                      starter-kit-bindings
-                      starter-kit-eshell
-                      clojure-mode
-                      clojure-test-mode
-                      ;; cperl-mode
-                      magit
-                      nrepl
-                      org
-                      slime
-                      ))
-
-(dolist (p my-packages)
-  (when (not (package-installed-p p))
-    (package-install p)))
-
-;; cperl setup
-;; (defalias 'perl-mode 'cperl-mode)
-;; (setq cperl-hairy t)
+(require 'tfiala-package)
+(let ((packages
+       '(starter-kit
+         starter-kit-lisp
+         starter-kit-bindings
+         starter-kit-eshell
+         clojure-mode
+         clojure-test-mode
+         ;; cperl-mode
+         magit
+         nrepl
+         org
+         slime
+         )))
+  (tfiala-load-package-list packages))
 
 ;; minimal keyboard setup
 (when (eq system-type 'darwin)
@@ -83,33 +70,17 @@
   (require 'go-mode)
   )
 
-;;
-;; package helper functions
-;;
-
-(defun tfiala-get-dir-for-package (package-symbol)
-  (elt (cadr (assoc package-symbol package-alist)) 7))
-
+(require 'slime-config)
 ;;
 ;; setup slime mode
 ;;
-(setq inferior-lisp-program "/lisps/acl90-smp.64/alisp")
-(require 'slime-autoloads)
+;; (setq inferior-lisp-program "/lisps/acl90-smp.64/alisp")
+;; (require 'slime-autoloads)
 
-(eval-after-load "slime"
-  '(progn
-     ;; (let ((slime-contrib-dir
-     ;;        (concat (tfiala-get-dir-for-package 'slime) "/contrib")))
-     ;;   (print slime-contrib-dir)
-     ;;   (when (file-exists-p slime-contrib-dir)
-     ;;     (add-to-list 'load-path slime-contrib-dir)))
+;; (eval-after-load "slime"
+;;   '(progn
+;;      (slime-setup '(slime-fancy slime-banner))
+;;      (setq slime-complete-symbol*-fancy t)
+;;      (setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)))
 
-     ;; (require 'slime-fancy)
-     ;; (slime-fancy-init)
-     ;; (require 'slime-banner)
-     ;; (slime-banner-init)
-     
-     (slime-setup '(slime-fancy slime-banner))
-     (setq slime-complete-symbol*-fancy t)
-     (setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)))
-
+;; (tfiala-per-machine-post)
