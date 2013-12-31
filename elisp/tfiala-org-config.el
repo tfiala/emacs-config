@@ -15,8 +15,18 @@
 
 (setq org-catch-invisible-edits 'show-and-error)
 (setq org-startup-indented t)
+
 (setq org-todo-keywords
-      '((sequence "WAITING(w)" "TODO(t)" "|" "DONE(d)")
-        (sequence "|" "CANCELED(c)")))
+      '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)" "XFER(x@/!)")))
+
+(setq org-log-into-drawer "LOGBOOK")
+
+(setq org-agenda-files
+      (or (and (boundp 'org-agenda-files) org-agenda-files)
+          '()))
+
+(let ((org-dir (concat (getenv "HOME") "/Google Drive/org")))
+  (when (file-exists-p org-dir)
+    (add-to-list 'org-agenda-files org-dir)))
 
 (provide 'tfiala-org-config)

@@ -1,6 +1,8 @@
 (require 'color-theme)
+
 (defvar tfiala-keyboard-use-kinesis)
 (defvar installed-lisps)
+(declare-function color-theme-gnome2 "color-theme.el" nil)
 
 (defun local-dot-emacs-pre ()
   (print (concat "starting local-dot-emacs-pre for " (system-name)))
