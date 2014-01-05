@@ -1,6 +1,7 @@
 *~
 *.elc
 .smex-items
+abbrev_defs
 auto-save-list/
 backups/
 elpa/
