@@ -21,12 +21,12 @@
 			      org
 			      slime))
       (additional-packages
-       (cond 
+       (cond
 	((>= emacs-major-version 24) '(starter-kit
 				       starter-kit-lisp
 				       starter-kit-eshell))
 	(t '()))))
-  
+
   (tfiala-load-package-list (append additional-packages always-load-packages)))
 
 (tfiala-per-machine-pre)
@@ -37,19 +37,19 @@
   (setq mac-command-modifier 'meta)
   (setq mac-option-modifier 'super))
 
-(when tfiala-keyboard-use-kinesis
-  (when (eq system-type 'gnu/linux)
-    (setq x-super-keysym 'meta)))
-
-;; kinesis keyboard on linux
-(setq tfiala-use-kinesis t)
-(when tfiala-use-kinesis
+(when (and (boundp 'tfiala-keyboard-use-kinesis)
+           tfiala-keyboard-use-kinesis)
   (when (eq system-type 'gnu/linux)
     (setq x-super-keysym 'meta)))
 
 ;; set default font
-(when (not (null window-system))
-  (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12")))
+(when (window-system)
+  (let* ((font-size (or (and (boundp 'tfiala-fontsize)
+                            tfiala-fontsize)
+                        12))
+         (font-name (format "DejaVu Sans Mono-%d" font-size)))
+    (print (concat "using font " font-name))
+    (add-to-list 'default-frame-alist `(font . ,font-name))))
 
 ;;
 ;; visual tweaks
@@ -92,7 +92,7 @@
 
 ;; start the server if it's not running
 (require 'server)
-(if (and (fboundp 'server-running-p) 
+(if (and (fboundp 'server-running-p)
          (not (server-running-p)))
     (server-start))
 
