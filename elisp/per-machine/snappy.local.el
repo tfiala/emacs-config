@@ -14,6 +14,7 @@
           (acl-smp-m ("/lisps/acl90-smp.64/mlisp"))
           (acl-a ("/lisps/acl90.64/alisp"))
           (acl-m ("/lisps/acl90.64/mlisp"))
+          (ccl ("/usr/local/bin/ccl64"))
           (clisp ("/usr/local/bin/clisp"))
           (cmucl ("/usr/local/bin/lisp"))
           (sbcl ("/usr/local/bin/sbcl")))))
