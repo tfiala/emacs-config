@@ -19,7 +19,8 @@
 			      color-theme
 			      magit
 			      org
-			      slime))
+			      slime
+                              tuareg))
       (additional-packages
        (cond
 	((>= emacs-major-version 24) '(starter-kit
@@ -102,6 +103,38 @@
 
 ;; gdb-mode fix for long load time on Emacs 24.
 (setq gdb-create-source-file-list nil)
+
+;; OCaml Mode
+(require 'tuareg)
+(setq auto-mode-alist
+      (append '(("\\.ml[ily]?$" . tuareg-mode))
+              auto-mode-alist))
+;; Tweak for problem on OS X where Emacs.app doesn't run the right
+;; init scripts when invoking a sub-shell
+(cond
+ ((eq window-system 'ns) ; macosx
+  ;; Invoke login shells, so that .profile or .bash_profile is read
+  (setq shell-command-switch "-lc")))
+;; Setup environment variables using opam
+(defun opam-vars ()
+  (let* ((x (shell-command-to-string "opam config env"))
+         (x (split-string x "\n"))
+         (x (remove-if (lambda (x) (equal x "")) x))
+         (x (mapcar (lambda (x) (split-string x ";")) x))
+         (x (mapcar (lambda (x) (car x)) x))
+         (x (mapcar (lambda (x) (split-string x "=")) x))
+         )
+    x))
+(dolist (var (opam-vars))
+  (setenv (car var) (substring (cadr var) 1 -1)))
+(setq exec-path (split-string (getenv "PATH") path-separator))
+;; Update the emacs load path
+(push (concat (getenv "OCAML_TOPLEVEL_PATH")
+              "/../../share/emacs/site-lisp") load-path)
+;; Automatically load utop.el
+(autoload 'utop "utop" "Toplevel for OCaml" t)
+(autoload 'utop-setup-ocaml-buffer "utop" "Toplevel for OCaml" t)
+(add-hook 'tuareg-mode-hook 'utop-setup-ocaml-buffer)
 
 (require 'tfiala-slime-config)
 
