@@ -22,6 +22,6 @@
       )
     ))
 
-(defun tfiala-setup-kinesis-keyboard
+(defun tfiala-setup-kinesis-keyboard ()
     (when (eq system-type 'gnu/linux)
       (setq x-super-keysym 'meta)))

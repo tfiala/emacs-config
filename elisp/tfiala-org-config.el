@@ -9,24 +9,24 @@
 ;; org agenda files - use google drive's org dir
 (unless (boundp 'org-agenda-files)
   (setq org-agenda-files '()))
-(let ((org-dir (concat (getenv "HOME") "/Google Drive/org")))
+(let ((org-dir (concat (getenv "HOME") "/.org.d")))
   (when (file-exists-p org-dir)
     (add-to-list 'org-agenda-files org-dir)))
 
 (setq org-catch-invisible-edits 'show-and-error)
 (setq org-startup-indented t)
 
+;; Specify additional TODO workflow states, along with whether time
+;; stamps and notes are specified with them.
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)" "XFER(x@/!)")))
+      '((sequence "TODO(t)" "STARTED(s)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)" "XFER(x@/!)")))
 
+;; When tracking state changes and notes, put them in a drawer with
+;; this name.
 (setq org-log-into-drawer "LOGBOOK")
 
-(setq org-agenda-files
-      (or (and (boundp 'org-agenda-files) org-agenda-files)
-          '()))
-
-(let ((org-dir (concat (getenv "HOME") "/Google Drive/org")))
-  (when (file-exists-p org-dir)
-    (add-to-list 'org-agenda-files org-dir)))
+;; Enforce TODO depedencies - don't allow marking a parent as DONE
+;; when any of the children are still not DONE.
+(setq org-enforce-todo-dependencies t)
 
 (provide 'tfiala-org-config)
