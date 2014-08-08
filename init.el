@@ -3,6 +3,8 @@
   (add-to-list 'load-path elisp-dir))
 
 (require 'tfiala-bootstrap)
+(require 'tfiala-package)
+(require 'tfiala-keyboard)
 
 ;;
 ;; load desired packages
@@ -11,8 +13,6 @@
 ;; is less than 24 and there is no local package.el
 ;; found in this directory: $HOME/emacs-vc
 ;;
-(require 'tfiala-package)
-
 (let ((always-load-packages '(clojure-mode
 			      clojure-test-mode
 			      cider
@@ -33,15 +33,9 @@
 (tfiala-per-machine-pre)
 
 ;; minimal keyboard setup
-(when (eq system-type 'darwin)
-  (setq mac-control-modifier 'ctrl)
-  (setq mac-command-modifier 'meta)
-  (setq mac-option-modifier 'super))
-
 (when (and (boundp 'tfiala-keyboard-use-kinesis)
            tfiala-keyboard-use-kinesis)
-  (when (eq system-type 'gnu/linux)
-    (setq x-super-keysym 'meta)))
+  (tfiala-setup-kinesis-keyboard))
 
 ;; set default font
 (when (window-system)
