@@ -1,3 +1,5 @@
+(require 'cl-lib)
+
 ;; add our elisp dir
 (let ((elisp-dir (concat (file-name-directory load-file-name) "elisp")))
   (add-to-list 'load-path elisp-dir))
@@ -115,7 +117,7 @@
   (defun opam-vars ()
     (let* ((x (shell-command-to-string "opam config env"))
            (x (split-string x "\n"))
-           (x (remove-if (lambda (x) (equal x "")) x))
+           (x (cl-remove-if (lambda (x) (equal x "")) x))
            (x (mapcar (lambda (x) (split-string x ";")) x))
            (x (mapcar (lambda (x) (car x)) x))
            (x (mapcar (lambda (x) (split-string x "=")) x))
