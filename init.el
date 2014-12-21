@@ -19,6 +19,10 @@
 			      clojure-test-mode
 			      cider
 			      color-theme
+                              exec-path-from-shell
+                              flycheck
+                              flycheck-ledger
+                              ledger-mode
 			      magit
 			      org
 			      slime
@@ -31,6 +35,11 @@
 	(t '()))))
 
   (tfiala-load-package-list (append additional-packages always-load-packages)))
+
+;; Before we do anything else, ensure our path is set correctly.  For
+;; now just do this on MacOSX.
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
 
 (tfiala-per-machine-pre)
 
@@ -135,6 +144,10 @@
   (add-hook 'tuareg-mode-hook 'utop-setup-ocaml-buffer))
 
 (require 'tfiala-slime-config)
+
+;; ledger setup
+(eval-after-load 'flycheck '(require 'flycheck-ledger))
+(add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode))
 
 ;;
 ;; KEEP THIS AT THE BOTTOM OF THE init.el FILE.
