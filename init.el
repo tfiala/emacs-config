@@ -15,17 +15,18 @@
 ;; is less than 24 and there is no local package.el
 ;; found in this directory: $HOME/emacs-vc
 ;;
-(let ((always-load-packages '(clojure-mode
-			      clojure-test-mode
-			      cider
+(let ((always-load-packages '(cider
+                              ac-cider
+                              clojure-mode
 			      color-theme
+                              color-theme-solarized
                               exec-path-from-shell
                               flycheck
-                              flycheck-ledger
-                              ledger-mode
 			      magit
 			      org
-			      slime
+                              rainbow-delimiters
+                              rainbow-mode
+                              slime
                               tuareg))
       (additional-packages
        (cond
@@ -145,9 +146,8 @@
 
 (require 'tfiala-slime-config)
 
-;; ledger setup
-(eval-after-load 'flycheck '(require 'flycheck-ledger))
-(add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode))
+;; python setup
+(add-hook 'python-mode-hook 'flycheck-mode)
 
 ;;
 ;; KEEP THIS AT THE BOTTOM OF THE init.el FILE.
