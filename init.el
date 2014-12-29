@@ -15,13 +15,18 @@
 ;; is less than 24 and there is no local package.el
 ;; found in this directory: $HOME/emacs-vc
 ;;
-(let ((always-load-packages '(clojure-mode
-			      clojure-test-mode
-			      cider
+(let ((always-load-packages '(cider
+                              ac-cider
+                              clojure-mode
 			      color-theme
+                              color-theme-solarized
+                              exec-path-from-shell
+                              flycheck
 			      magit
 			      org
-			      slime
+                              rainbow-delimiters
+                              rainbow-mode
+                              slime
                               tuareg))
       (additional-packages
        (cond
@@ -31,6 +36,11 @@
 	(t '()))))
 
   (tfiala-load-package-list (append additional-packages always-load-packages)))
+
+;; Before we do anything else, ensure our path is set correctly.  For
+;; now just do this on MacOSX.
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
 
 (tfiala-per-machine-pre)
 
@@ -135,6 +145,9 @@
   (add-hook 'tuareg-mode-hook 'utop-setup-ocaml-buffer))
 
 (require 'tfiala-slime-config)
+
+;; python setup
+(add-hook 'python-mode-hook 'flycheck-mode)
 
 ;;
 ;; KEEP THIS AT THE BOTTOM OF THE init.el FILE.
