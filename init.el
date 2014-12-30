@@ -144,6 +144,7 @@
   (autoload 'utop-setup-ocaml-buffer "utop" "Toplevel for OCaml" t)
   (add-hook 'tuareg-mode-hook 'utop-setup-ocaml-buffer))
 
+(require 'tfiala-clojure-config)
 (require 'tfiala-slime-config)
 
 ;; python setup
