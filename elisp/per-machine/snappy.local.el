@@ -29,5 +29,5 @@
   ;; set the color theme
   (require 'color-theme)
   (color-theme-initialize)
-  (color-theme-solarized-dark)
+  (color-theme-solarized-light)
   (print (concat "finishing local-dot-emacs-post for " (system-name))))

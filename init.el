@@ -40,7 +40,8 @@
 ;; Before we do anything else, ensure our path is set correctly.  For
 ;; now just do this on MacOSX.
 (when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
+  (exec-path-from-shell-initialize)
+  (exec-path-from-shell-copy-env "EDITOR"))
 
 (tfiala-per-machine-pre)
 
