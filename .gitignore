@@ -1,5 +1,6 @@
 *~
 *.elc
+.cider-history
 .smex-items
 abbrev_defs
 auto-save-list/

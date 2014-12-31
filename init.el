@@ -151,6 +151,9 @@
 ;; python setup
 (add-hook 'python-mode-hook 'flycheck-mode)
 
+;; Enable company-mode everywhere (complete-any mode).
+(global-company-mode)
+
 ;;
 ;; KEEP THIS AT THE BOTTOM OF THE init.el FILE.
 ;;
