@@ -20,8 +20,14 @@
                               clojure-mode
 			      color-theme
                               color-theme-solarized
+                              company
+                              company-ghc
                               exec-path-from-shell
                               flycheck
+                              flycheck-haskell
+                              ghc
+                              haskell-mode
+                              hi2
 			      magit
 			      org
                               rainbow-delimiters
@@ -55,7 +61,7 @@
   (let* ((font-size (or (and (boundp 'tfiala-fontsize)
                             tfiala-fontsize)
                         12))
-         (font-name (format "DejaVu Sans Mono-%d" font-size)))
+         (font-name (format "Source Code Pro-%d" font-size)))
     (print (concat "using font " font-name))
     (add-to-list 'default-frame-alist `(font . ,font-name))))
 
@@ -148,11 +154,16 @@
 (require 'tfiala-clojure-config)
 (require 'tfiala-slime-config)
 
+(require 'tfiala-haskell-config)
+
 ;; python setup
 (add-hook 'python-mode-hook 'flycheck-mode)
 
 ;; Enable company-mode everywhere (complete-any mode).
 (global-company-mode)
+
+;; Accounting related.
+(require 'tfiala-beancount-config)
 
 ;;
 ;; KEEP THIS AT THE BOTTOM OF THE init.el FILE.
