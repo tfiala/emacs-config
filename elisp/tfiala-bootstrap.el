@@ -13,6 +13,17 @@
   (when (fboundp 'local-dot-emacs-post)
     (local-dot-emacs-post)))
 
+(defun tfiala-directory-plus-element
+  (directory final-path-element)
+  "Indicate if the directory and the given path element exists, returning it if it does, or nil otherwise."
+  (concat (file-name-as-directory directory) (file-name-nondirectory final-path-element)))
+
+(defun tfiala-first-file-in-path
+    (directories program-name)
+  "Return the first full path to the program-name that exists using each of the given directories."
+  (let ((present-paths (cl-remove-if-not 'file-exists-p (mapcar (lambda (x) (tfiala-directory-plus-element x program-name)) directories))))
+     (car present-paths)))
+
 ;;
 ;; package helper functions
 ;;

@@ -96,11 +96,7 @@
 (setq visible-bell nil)
 
 ;; set ispell
-(when (file-exists-p "/usr/bin/aspell")
-  (setq-default ispell-program-name "/usr/bin/aspell"))
-
-(when (file-exists-p "/usr/local/bin/aspell")
-  (setq-default ispell-program-name "/usr/local/bin/aspell"))
+(require 'tfiala-spell-config)
 
 (require 'tfiala-org-config)
 
