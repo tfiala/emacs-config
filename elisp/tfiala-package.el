@@ -1,6 +1,5 @@
 (defvar package-archives)
 (defvar package-archive-contents)
-(declare-function package-installed-p "package.el" (package))
 
 (defun tfiala-load-unbundled-package ()
   "Load the external package.el if it can be found; return non-nil on success, nil otherwise"

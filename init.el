@@ -1,4 +1,4 @@
-(require 'cl-lib)
+(require 'cl)
 
 ;; add our elisp dir
 (let ((elisp-dir (concat (file-name-directory load-file-name) "elisp")))
@@ -17,6 +17,7 @@
 ;;
 (let ((always-load-packages '(cider
                               ac-cider
+			      cl-lib
                               clojure-mode
 			      color-theme
                               color-theme-solarized
@@ -57,7 +58,7 @@
   (tfiala-setup-kinesis-keyboard))
 
 ;; set default font
-(when (window-system)
+(when window-system
   (let* ((font-size (or (and (boundp 'tfiala-fontsize)
                             tfiala-fontsize)
                         12))
@@ -160,6 +161,8 @@
 
 ;; Accounting related.
 (require 'tfiala-beancount-config)
+
+(require 'tfiala-display-helpers)
 
 ;;
 ;; KEEP THIS AT THE BOTTOM OF THE init.el FILE.

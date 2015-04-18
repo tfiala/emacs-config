@@ -1,9 +1,3 @@
-(when (file-exists-p "/usr/bin/aspell")
-  (setq-default ispell-program-name "/usr/bin/aspell"))
-
-(when (file-exists-p "/usr/local/bin/aspell")
-  (setq-default ispell-program-name "/usr/local/bin/aspell"))
-
 ;; Find the first aspell
 (let* ((search-paths `("/usr/bin" ,(concat (getenv "HOME") "/homebrew/bin") "/usr/local/bin"))
        (ispell-path (or
