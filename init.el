@@ -17,7 +17,6 @@
 ;;
 (let ((always-load-packages '(cider
                               ac-cider
-			      cl-lib
                               clojure-mode
 			      color-theme
                               color-theme-solarized
