@@ -1,4 +1,4 @@
-(require 'cl)
+(require 'cl-lib)
 
 ;; add our elisp dir
 (let ((elisp-dir (concat (file-name-directory load-file-name) "elisp")))

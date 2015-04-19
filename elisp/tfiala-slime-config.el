@@ -1,5 +1,4 @@
 ;; Slime integration for Lisp
-(require 'cl)
 (require 'cl-lib)
 
 ;; slime forward declarations
@@ -20,7 +19,7 @@
 ;; if installed lisps are specified and at least one exists,
 ;; we'll cofigure slime mode.
 (when (boundp 'installed-lisps)
-  (let ((available-lisps (remove-if-not #'tfiala-slime-config/lisp-exists-p installed-lisps)))
+  (let ((available-lisps (cl-remove-if-not #'tfiala-slime-config/lisp-exists-p installed-lisps)))
     (when (not (null available-lisps))
       ;; found a lisp, we can setup
       (require 'slime-autoloads)

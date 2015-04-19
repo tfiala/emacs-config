@@ -1,3 +1,5 @@
+(require 'cl-lib)
+
 (add-hook 'after-make-frame-functions
           (lambda (frame)
 	    (let ((solarized-color (or (getenv "SOLARIZED") "light")))
@@ -8,7 +10,7 @@
 (defun tfiala-toggle-background-mode ()
   "Toggle the background mode between light and dark."
   (interactive
-   (flet ((new-color-from-old (old-color)
+   (cl-flet ((new-color-from-old (old-color)
                               (cond ((eq old-color 'light) 'dark)
                                     (t 'light))))
      (let ((new-color (new-color-from-old (or (frame-parameter nil 'background-mode) 'light))))

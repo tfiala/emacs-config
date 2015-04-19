@@ -28,6 +28,11 @@
 (defun local-dot-emacs-post ()
   ;; set the color theme
   (require 'color-theme)
+  (require 'color-theme-solarized)
   (color-theme-initialize)
-  (color-theme-solarized-light)
+  (when (not window-system)
+    (let ((solarized-color-string (or (getenv "SOLARIZED") "light")))
+      (setq frame-background-mode (intern solarized-color-string))
+      (set-terminal-parameter nil 'background-mode (intern solarized-color-string))))
+  (load-theme 'solarized t)
   (print (concat "finishing local-dot-emacs-post for " (system-name))))
