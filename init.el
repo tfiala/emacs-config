@@ -30,6 +30,7 @@
                               hi2
 			      magit
 			      org
+                              projectile
                               rainbow-delimiters
                               rainbow-mode
                               slime
@@ -62,6 +63,12 @@
 (global-set-key (kbd "C-s-l") 'windmove-right)
 (global-set-key (kbd "C-s-k") 'windmove-up)
 (global-set-key (kbd "C-s-j") 'windmove-down)
+
+;; Fixup dired mode
+(when (eq system-type 'darwin)
+  (setq dired-use-ls-dired nil)
+  )
+
 
 ;; set default font
 (when window-system
