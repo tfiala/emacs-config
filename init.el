@@ -56,6 +56,13 @@
            tfiala-keyboard-use-kinesis)
   (tfiala-setup-kinesis-keyboard))
 
+;; Windows movement helpers
+;; Ctrl + Super + hjkl moves to a window in that direction.
+(global-set-key (kbd "C-s-h") 'windmove-left)
+(global-set-key (kbd "C-s-l") 'windmove-right)
+(global-set-key (kbd "C-s-k") 'windmove-up)
+(global-set-key (kbd "C-s-j") 'windmove-down)
+
 ;; set default font
 (when window-system
   (let* ((font-size (or (and (boundp 'tfiala-fontsize)
@@ -152,8 +159,18 @@
 
 (require 'tfiala-haskell-config)
 
+;;
 ;; python setup
+;;
+
+;; Use flycheck.
 (add-hook 'python-mode-hook 'flycheck-mode)
+
+;; After flake8-ing, use pylint.
+(with-eval-after-load "flycheck"
+  (print "-tfiala- setting up python flychecker chain")
+  (flycheck-add-next-checker 'python-flake8
+                             'python-pylint))
 
 ;; Enable company-mode everywhere (complete-any mode).
 (global-company-mode)
