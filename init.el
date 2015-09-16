@@ -17,7 +17,6 @@
 ;;
 (let ((always-load-packages '(cider
                               ac-cider
-			      cl-lib
                               clojure-mode
 			      color-theme
                               color-theme-solarized
@@ -31,6 +30,7 @@
                               hi2
 			      magit
 			      org
+                              projectile
                               rainbow-delimiters
                               rainbow-mode
                               slime
@@ -56,6 +56,19 @@
 (when (and (boundp 'tfiala-keyboard-use-kinesis)
            tfiala-keyboard-use-kinesis)
   (tfiala-setup-kinesis-keyboard))
+
+;; Windows movement helpers
+;; Ctrl + Super + hjkl moves to a window in that direction.
+(global-set-key (kbd "C-s-h") 'windmove-left)
+(global-set-key (kbd "C-s-l") 'windmove-right)
+(global-set-key (kbd "C-s-k") 'windmove-up)
+(global-set-key (kbd "C-s-j") 'windmove-down)
+
+;; Fixup dired mode
+(when (eq system-type 'darwin)
+  (setq dired-use-ls-dired nil)
+  )
+
 
 ;; set default font
 (when window-system
@@ -153,8 +166,18 @@
 
 (require 'tfiala-haskell-config)
 
+;;
 ;; python setup
+;;
+
+;; Use flycheck.
 (add-hook 'python-mode-hook 'flycheck-mode)
+
+;; After flake8-ing, use pylint.
+(with-eval-after-load "flycheck"
+  (print "-tfiala- setting up python flychecker chain")
+  (flycheck-add-next-checker 'python-flake8
+                             'python-pylint))
 
 ;; Enable company-mode everywhere (complete-any mode).
 (global-company-mode)
