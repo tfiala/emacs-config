@@ -20,7 +20,7 @@
           (ccl ("/usr/local/bin/ccl64"))
           (clisp ("/usr/local/bin/clisp"))
           (cmucl ("/usr/local/bin/lisp"))
-          (sbcl ("/usr/local/bin/sbcl"))))
+          (sbcl ("/usr/local/bin/sbcl" "--core" "/Users/tfiala/sbcl/sbcl.core-for-slime"))))
 
   ;; Setup keyboard handling.
   (tfiala-setup-mac-keyboard t))
