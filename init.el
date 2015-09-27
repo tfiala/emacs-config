@@ -23,6 +23,7 @@
                               company
                               company-ghc
                               exec-path-from-shell
+                              flx-ido
                               flycheck
                               flycheck-haskell
                               ghc
@@ -64,11 +65,44 @@
 (global-set-key (kbd "C-s-k") 'windmove-up)
 (global-set-key (kbd "C-s-j") 'windmove-down)
 
-;; Fixup dired mode
+;;
+;; Dired settings
+;;
+
+;; Fixup dired warning re: ls on OS X
 (when (eq system-type 'darwin)
   (setq dired-use-ls-dired nil)
   )
 
+;; Use dired-x
+(add-hook
+ 'dired-load-hook
+ (lambda ()
+   (load "dired-x")
+   ;; Set dired-x global variables here.  For example:
+   ;; (setq dired-guess-shell-gnutar "gtar")
+   ;; (setq dired-x-hands-off-my-keys nil)
+   ))
+(add-hook
+ 'dired-mode-hook
+ (lambda ()
+   ;; Set dired-x buffer-local variables here.
+   (dired-omit-mode 1)
+   ))
+
+;; Enable dired-jump and dired-jump-other-window before
+;; dired is loaded.
+(autoload 'dired-jump "dired-x"
+  "Jump to Dired buffer corresponding to current buffer." t)
+
+(autoload 'dired-jump-other-window "dired-x"
+  "Like \\[dired-jump] (dired-jump) but in other window." t)
+
+(define-key global-map "\C-x\C-j" 'dired-jump)
+(define-key global-map "\C-x4\C-j" 'dired-jump-other-window)
+
+;; Enable projectile mode everywhere
+(projectile-global-mode)
 
 ;; set default font
 (when window-system
