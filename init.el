@@ -22,16 +22,25 @@
        '(cider
 	 clojure-mode
 	 color-theme
+	 color-theme-solarized
+	 exec-path-from-shell
 	 helm
 	 magit
 	 org
 	 paredit
 	 rainbow-delimiters
-	 solarized-theme
 	 )))
   (dolist (p packages)
     (when (not (package-installed-p p))
       (package-install p))))
+
+;;
+;; Get exec-path setup right
+;;
+(when (eq system-type 'darwin)
+  (require 'exec-path-from-shell)
+  (exec-path-from-shell-initialize)
+  (exec-path-from-shell-copy-env "EDITOR"))
 
 ;;
 ;; Setup fonts
@@ -62,14 +71,16 @@
 ;;
 
 (require 'color-theme)
+(require 'color-theme-solarized)
 (color-theme-initialize)
+
 (when (not window-system)
   (let ((solarized-color-string (or (getenv "SOLARIZED") "light")))
     (setq frame-background-mode (intern solarized-color-string))
     (set-terminal-parameter nil 'background-mode (intern solarized-color-string))))
 (if (string= (or (getenv "SOLARIZED") "light") "light")
-    (load-theme 'solarized-light t)
-  (load-theme 'solarized-dark t))
+    (load-theme 'solarized t)
+  (load-theme 'solarized t))
 
 (load-theme 'solarized t)
 
