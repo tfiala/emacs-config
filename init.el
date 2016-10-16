@@ -70,19 +70,32 @@
 ;; Setup color theme
 ;;
 
+(defun solarized-is-light-p ()
+  (if window-system
+      (eq (frame-parameter (selected-frame) 'background-mode) 'light)
+    (eq (terminal-parameter nil 'background-mode) 'light)))
+
+(defun solarized-set (use-light)
+  (let ((background (if use-light 'light 'dark)))
+    (set-frame-parameter nil 'background-mode background)
+    (when (not window-system)
+      (set-terminal-parameter nil 'background-mode background)))
+  (enable-theme 'solarized))
+
+(defun solarized-toggle ()
+  (interactive)
+  (solarized-set (not (solarized-is-light-p))))
+
 (require 'color-theme)
 (require 'color-theme-solarized)
 (color-theme-initialize)
-
-(when (not window-system)
-  (let ((solarized-color-string (or (getenv "SOLARIZED") "light")))
-    (setq frame-background-mode (intern solarized-color-string))
-    (set-terminal-parameter nil 'background-mode (intern solarized-color-string))))
-(if (string= (or (getenv "SOLARIZED") "light") "light")
-    (load-theme 'solarized t)
-  (load-theme 'solarized t))
-
 (load-theme 'solarized t)
+
+(global-set-key (kbd "C-c s") 'solarized-toggle)
+
+;; Initialize solarized to env-var SOLARIZED, which should be
+;; "light" or "dark".  When not set, use "light".
+(solarized-set (string= (or (getenv "SOLARIZED") "light") "light"))
 
 ;;
 ;; Setup dired
@@ -127,3 +140,17 @@
 (global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
 (global-set-key (kbd "C-x C-f") #'helm-find-files)
 (helm-mode 1)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (org solarized-theme rainbow-delimiters paredit magit helm exec-path-from-shell color-theme-solarized cider))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
