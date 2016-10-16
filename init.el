@@ -1,5 +1,5 @@
 ;;
-;; Load packages 
+;; Load packages
 ;;
 
 ;; setup package loading
@@ -46,10 +46,17 @@
 ;;
 ;; Get exec-path setup right
 ;;
+
 (when (eq system-type 'darwin)
   (require 'exec-path-from-shell)
   (exec-path-from-shell-initialize)
   (exec-path-from-shell-copy-env "EDITOR"))
+
+;;
+;; yes-or-no questions should accept just 'y' or 'n'
+;;
+
+(defalias 'yes-or-no-p 'y-or-n-p)
 
 ;;
 ;; Setup fonts
@@ -74,6 +81,20 @@
 ;;
 
 (tool-bar-mode -1)
+
+;;
+;; No visible bell
+;;
+
+(setq visible-bell nil)
+
+;;
+;; We want to see trailing whitespace
+;;
+
+(require 'whitespace)
+(global-set-key (kbd "C-c w") 'whitespace-mode)
+(global-set-key (kbd "C-c t") 'whitespace-toggle-options)
 
 ;;
 ;; Setup color theme
@@ -113,6 +134,33 @@
 (setq insert-directory-program "/usr/local/bin/gls")
 (setq dired-listing-switches "-aBhl --group-directories-first")
 
+;; Use dired-x
+(add-hook
+ 'dired-load-hook
+ (lambda ()
+   (load "dired-x")
+   ;; Set dired-x global variables here.  For example:
+   ;; (setq dired-guess-shell-gnutar "gtar")
+   ;; (setq dired-x-hands-off-my-keys nil)
+   ))
+(add-hook
+ 'dired-mode-hook
+ (lambda ()
+   ;; Set dired-x buffer-local variables here.
+   (dired-omit-mode 1)
+   ))
+
+;; Enable dired-jump and dired-jump-other-window before
+;; dired is loaded.
+(autoload 'dired-jump "dired-x"
+  "Jump to Dired buffer corresponding to current buffer." t)
+
+(autoload 'dired-jump-other-window "dired-x"
+  "Like \\[dired-jump] (dired-jump) but in other window." t)
+
+(define-key global-map "\C-x\C-j" 'dired-jump)
+(define-key global-map "\C-x4\C-j" 'dired-jump-other-window)
+
 ;;
 ;; Setup paredit
 ;;
@@ -147,6 +195,9 @@
 
 (require 'projectile)
 
+;; run projectile everywhere
+(projectile-global-mode)
+
 ;;
 ;; Setup helm
 ;;
@@ -165,6 +216,9 @@
 ;;
 
 (require 'company)
+
+;; use company everywhere
+(global-company-mode)
 
 ;;
 ;; Elixir support
