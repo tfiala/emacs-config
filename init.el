@@ -25,9 +25,11 @@
 	 color-theme-solarized
 	 exec-path-from-shell
 	 helm
+	 helm-projectile
 	 magit
 	 org
 	 paredit
+	 projectile
 	 rainbow-delimiters
 	 )))
   (dolist (p packages)
@@ -133,6 +135,12 @@
 (show-paren-mode 1)
 
 ;;
+;; Setup projectile
+;;
+
+(require 'projectile)
+
+;;
 ;; Setup helm
 ;;
 (require 'helm-config)
@@ -140,17 +148,7 @@
 (global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
 (global-set-key (kbd "C-x C-f") #'helm-find-files)
 (helm-mode 1)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (org solarized-theme rainbow-delimiters paredit magit helm exec-path-from-shell color-theme-solarized cider))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
+;; Integrate helm with projectile
+(require 'helm-projectile)
+(helm-projectile-on)
