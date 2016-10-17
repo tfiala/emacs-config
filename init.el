@@ -26,7 +26,9 @@
 	 color-theme-solarized
 	 company
 	 elixir-mode
+	 elm-mode
 	 exec-path-from-shell
+	 haskell-mode
 	 helm
 	 helm-projectile
 	 magit
@@ -245,3 +247,13 @@
          :when '(("SPC" "RET"))
          :post-handlers '(sp-ruby-def-post-handler)
          :actions '(insert navigate)))
+
+;;
+;; Elm support
+;;
+
+;; autocompletion support through elm-oracle (node-based)
+(add-hook 'elm-mode-hook #'elm-oracle-setup-completion)
+(add-to-list 'company-backends 'company-elm)
+
+(require 'elm-mode)
