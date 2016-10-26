@@ -32,6 +32,7 @@
 	 helm
 	 helm-projectile
 	 magit
+	 ob-elixir
 	 org
 	 paredit
 	 projectile
@@ -221,6 +222,37 @@
 
 ;; use company everywhere
 (global-company-mode)
+
+;;
+;; Org setup
+;;
+
+;; FIXME autoload this
+(require 'org)
+
+;; Enable graphviz and dot in org-mode code blocks
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((clojure . t)
+   (dot . t)
+   (elixir . t)
+   (emacs-lisp . t)
+   (sh . t)))
+
+;; Support clojure in org-mode
+(add-hook
+ 'org-mode-hook
+ (lambda ()
+   (require 'ob-clojure)
+   (require 'ob-elixir)
+   (setq org-babel-clojure-backend 'cider)
+   (require 'cider)
+   (setq org-edit-src-content-indentation 0
+	 org-src-tab-acts-natively t
+	 org-src-fontify-natively t
+	 org-confirm-babel-evaluate nil
+	 org-support-shift-select 'always
+	 )))
 
 ;;
 ;; Elixir support
