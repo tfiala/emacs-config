@@ -257,11 +257,15 @@
 
 (global-set-key (kbd "C-c o")
 		(lambda () (interactive) (find-file "~/organizer.org")))
+(global-set-key (kbd "C-c c") 'org-capture)
+
+(setq org-directory (concat (getenv "HOME") "/Dropbox/org"))
+(setq org-default-notes-file (concat org-directory "/notes.org"))
 (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
-(setq org-agenda-files '("/Users/tfiala/Dropbox/org/home.org"
-			 "/Users/tfiala/Dropbox/org/work.org"))
+(setq org-agenda-files '("home.org" "work.org"))
+
 (require 'org-journal)
-(setq org-journal-dir (concat (getenv "HOME") "/Dropbox/org/journal"))
+(setq org-journal-dir (concat org-directory "/journal"))
 
 ;;
 ;; Elixir support
