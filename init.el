@@ -34,6 +34,7 @@
 	 magit
 	 ob-elixir
 	 org
+	 org-journal
 	 paredit
 	 projectile
 	 rainbow-delimiters
@@ -254,6 +255,14 @@
 	 org-support-shift-select 'always
 	 )))
 
+(global-set-key (kbd "C-c o")
+		(lambda () (interactive) (find-file "~/organizer.org")))
+(setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
+(setq org-agenda-files '("/Users/tfiala/Dropbox/org/home.org"
+			 "/Users/tfiala/Dropbox/org/work.org"))
+(require 'org-journal)
+(setq org-journal-dir (concat (getenv "HOME") "/Dropbox/org/journal"))
+
 ;;
 ;; Elixir support
 ;;
@@ -290,12 +299,6 @@
 
 (require 'elm-mode)
 
-;;
-;; org-mode support
-;;
-(global-set-key (kbd "C-c o")
-		(lambda () (interactive) (find-file "~/organizer.org")))
-(setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
-(setq org-agenda-files '("/Users/tfiala/Dropbox/org/home.org"
-			 "/Users/tfiala/Dropbox/org/work.org"))
-
+;; flyspell setup
+(add-hook 'text-mode-hook 'flyspell-mode)
+(add-hook 'prog-mode-hook 'flyspell-prog-mode)
