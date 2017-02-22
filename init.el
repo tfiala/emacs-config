@@ -1,3 +1,5 @@
+(require 'cl-lib)
+
 ;;
 ;; Load packages
 ;;
@@ -255,13 +257,19 @@
 	 org-support-shift-select 'always
 	 )))
 
-(global-set-key (kbd "C-c o")
-		(lambda () (interactive) (find-file "~/organizer.org")))
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c c") 'org-capture)
+
+(setq org-directory (concat (getenv "HOME") "/Dropbox/org/"))
 (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
-(setq org-agenda-files '("/Users/tfiala/Dropbox/org/home.org"
-			 "/Users/tfiala/Dropbox/org/work.org"))
+(setq org-agenda-files `(,org-directory))
+
+;; org-journal
+(setq org-journal-dir (concat org-directory "journal/"))
+(add-to-list 'org-agenda-files org-journal-dir)
+(setq org-agenda-file-regexp "\\`[^.].*\\.org\\'\\|[0-9]+\\'")
+
 (require 'org-journal)
-(setq org-journal-dir (concat (getenv "HOME") "/Dropbox/org/journal"))
 
 ;;
 ;; Elixir support
