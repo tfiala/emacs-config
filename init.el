@@ -59,6 +59,13 @@
   (exec-path-from-shell-copy-env "EDITOR"))
 
 ;;
+;; Keyboard setup
+;;
+
+(when (eq window-system 'ns)
+  (setq mac-command-modifier 'meta))
+
+;;
 ;; yes-or-no questions should accept just 'y' or 'n'
 ;;
 
