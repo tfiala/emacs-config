@@ -271,11 +271,15 @@
 
 (setq org-directory (concat (getenv "HOME") "/Dropbox/org/"))
 (setq org-default-notes-file (concat org-directory "notes.org"))
+
+;; org: visuals
+(setq org-startup-indented t)
+
+;; org: agenda
 (setq org-agenda-files (list (concat org-directory "taskdiary.org")))
 (add-to-list 'org-agenda-files org-journal-dir)
 (setq org-agenda-file-regexp "\\`[^.].*\\.org\\'\\|[0-9]+\\'")
 (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
-
 (setq org-capture-templates
     '(("a" "Appointment" entry (file+headline
 				"taskdiary.org" "Calendar")
