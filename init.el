@@ -255,18 +255,38 @@
 	 org-support-shift-select 'always
 	 )))
 
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c c") 'org-capture)
 (global-set-key (kbd "C-c o")
 		(lambda () (interactive) (find-file "~/organizer.org")))
-(global-set-key (kbd "C-c c") 'org-capture)
 
 (setq org-directory (concat (getenv "HOME") "/Dropbox/org"))
 (setq org-default-notes-file (concat org-directory "/notes.org"))
 (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
-(setq org-agenda-files '("home.org" "work.org"))
+(setq org-agenda-files (list (concat org-directory "/taskdiary.org")))
+
+(setq org-capture-templates
+    '(("a" "Appointment" entry (file+headline
+				"taskdiary.org" "Calendar")
+       "* APPT %^{Description} %^g
+%?
+Added: %U")
+      ("n" "Notes" entry (file+datetree
+			  "taskdiary.org")
+       "* %^{Description} %^g %?
+Added: %U")
+      ("t" "Task Diary" entry (file+datetree
+			       "taskdiary.org")
+       "* TODO %^{Description}  %^g
+%?
+Added: %U")
+      ("l" "Log Time" entry (file+datetree
+			     "timelog.org" )
+       "** %U - %^{Activity}  :TIME:")
+      ))
 
 (require 'org-journal)
 (setq org-journal-dir (concat org-directory "/journal"))
-
 ;;
 ;; Elixir support
 ;;
