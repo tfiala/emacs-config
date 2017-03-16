@@ -1,3 +1,5 @@
+(require 'cl-lib)
+
 ;;
 ;; Load packages
 ;;
@@ -55,6 +57,13 @@
   (require 'exec-path-from-shell)
   (exec-path-from-shell-initialize)
   (exec-path-from-shell-copy-env "EDITOR"))
+
+;;
+;; Keyboard setup
+;;
+
+(when (eq window-system 'ns)
+  (setq mac-command-modifier 'meta))
 
 ;;
 ;; yes-or-no questions should accept just 'y' or 'n'
@@ -260,10 +269,12 @@
 (global-set-key (kbd "C-c o")
 		(lambda () (interactive) (find-file "~/organizer.org")))
 
-(setq org-directory (concat (getenv "HOME") "/Dropbox/org"))
-(setq org-default-notes-file (concat org-directory "/notes.org"))
+(setq org-directory (concat (getenv "HOME") "/Dropbox/org/"))
+(setq org-default-notes-file (concat org-directory "notes.org"))
+(setq org-agenda-files (list (concat org-directory "taskdiary.org")))
+(add-to-list 'org-agenda-files org-journal-dir)
+(setq org-agenda-file-regexp "\\`[^.].*\\.org\\'\\|[0-9]+\\'")
 (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
-(setq org-agenda-files (list (concat org-directory "/taskdiary.org")))
 
 (setq org-capture-templates
     '(("a" "Appointment" entry (file+headline
@@ -285,8 +296,10 @@ Added: %U")
        "** %U - %^{Activity}  :TIME:")
       ))
 
+;; org-journal
+(setq org-journal-dir (concat org-directory "journal/"))
 (require 'org-journal)
-(setq org-journal-dir (concat org-directory "/journal"))
+
 ;;
 ;; Elixir support
 ;;
