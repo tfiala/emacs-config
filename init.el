@@ -275,6 +275,10 @@
 (setq org-journal-dir (concat org-directory "journal/"))
 (add-to-list 'org-agenda-files org-journal-dir)
 (setq org-agenda-file-regexp "\\`[^.].*\\.org\\'\\|[0-9]+\\'")
+;; Prevent carrying TODO items over to the next day.  I find this is
+;; losing context with the meeting where I took the notes.  Agenda
+;; view already covers these.
+(setq org-journal-carryover-items nil)
 
 (require 'org-journal)
 
