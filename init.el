@@ -272,6 +272,7 @@
 (setq org-directory (concat (getenv "HOME") "/Dropbox/org/"))
 (setq org-default-notes-file (concat org-directory "notes.org"))
 (setq org-log-done 'time)
+(setq org-todo-keywords '((sequence "TODO" "WAIT" "|" "DONE" "DELEGATED")))
 
 ;; org: visuals
 (setq org-startup-indented t)
