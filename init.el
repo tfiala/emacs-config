@@ -266,20 +266,46 @@
 
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c c") 'org-capture)
+(global-set-key (kbd "C-c o")
+		(lambda () (interactive) (find-file "~/organizer.org")))
 
 (setq org-directory (concat (getenv "HOME") "/Dropbox/org/"))
+(setq org-default-notes-file (concat org-directory "notes.org"))
+
+;; org: visuals
+(setq org-startup-indented t)
+
+;; org: agenda
+(setq org-agenda-files (list (concat org-directory "taskdiary.org")))
+(setq org-agenda-file-regexp "\\`[^.].*\\.org\\'\\|[0-9]+\\'")
 (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
-(setq org-agenda-files `(,org-directory))
+(setq org-capture-templates
+    '(("a" "Appointment" entry (file+headline
+				"taskdiary.org" "Calendar")
+       "* APPT %^{Description} %^g
+%?
+Added: %U")
+      ("n" "Notes" entry (file+datetree
+			  "taskdiary.org")
+       "* %^{Description} %^g %?
+Added: %U")
+      ("t" "Task Diary" entry (file+datetree
+			       "taskdiary.org")
+       "* TODO %^{Description}  %^g
+%?
+Added: %U")
+      ("l" "Log Time" entry (file+datetree
+			     "timelog.org" )
+       "** %U - %^{Activity}  :TIME:")
+      ))
 
 ;; org-journal
 (setq org-journal-dir (concat org-directory "journal/"))
 (add-to-list 'org-agenda-files org-journal-dir)
-(setq org-agenda-file-regexp "\\`[^.].*\\.org\\'\\|[0-9]+\\'")
 ;; Prevent carrying TODO items over to the next day.  I find this is
 ;; losing context with the meeting where I took the notes.  Agenda
 ;; view already covers these.
 (setq org-journal-carryover-items nil)
-
 (require 'org-journal)
 
 ;;
