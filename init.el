@@ -35,7 +35,7 @@
 	 helm-projectile
 	 magit
 	 ob-elixir
-	 org
+	 ;; org
 	 org-journal
 	 paredit
 	 projectile
@@ -247,7 +247,7 @@
    (dot . t)
    (elixir . t)
    (emacs-lisp . t)
-   (sh . t)))
+   (shell . t)))
 
 ;; Support clojure in org-mode
 (add-hook
