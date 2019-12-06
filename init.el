@@ -21,30 +21,19 @@
 
 ;; Install packages.
 (let ((packages
-       '(alchemist
-	 cider
+       '(cider
 	 clojure-mode
-	 color-theme
 	 color-theme-solarized
 	 company
-	 elixir-mode
-	 elm-mode
 	 exec-path-from-shell
-	 haskell-mode
 	 helm
 	 helm-projectile
 	 magit
-	 ob-elixir
 	 ;; org
 	 org-journal
 	 paredit
 	 projectile
-	 rainbow-delimiters
-	 ;; Ruby end-mode is used here for Elixir
-	 ruby-end
-	 ;; For Elixir, also adapted from Ruby
-	 smartparens
-	 )))
+	 rainbow-delimiters)))
   (dolist (p packages)
     (when (not (package-installed-p p))
       (package-install p))))
@@ -129,9 +118,7 @@
   (interactive)
   (solarized-set (not (solarized-is-light-p))))
 
-(require 'color-theme)
 (require 'color-theme-solarized)
-(color-theme-initialize)
 (load-theme 'solarized t)
 
 (global-set-key (kbd "C-c s") 'solarized-toggle)
