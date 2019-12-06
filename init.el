@@ -232,7 +232,6 @@
  'org-babel-load-languages
  '((clojure . t)
    (dot . t)
-   (elixir . t)
    (emacs-lisp . t)
    (shell . t)))
 
@@ -241,7 +240,6 @@
  'org-mode-hook
  (lambda ()
    (require 'ob-clojure)
-   (require 'ob-elixir)
    (setq org-babel-clojure-backend 'cider)
    (require 'cider)
    (setq org-edit-src-content-indentation 0
@@ -296,42 +294,6 @@ Added: %U")
 ;; view already covers these.
 (setq org-journal-carryover-items nil)
 (require 'org-journal)
-
-;;
-;; Elixir support
-;;
-
-(require 'elixir-mode)
-(require 'alchemist)
-(require 'smartparens)
-
-;; Elixir adaptation of Ruby end mode
-(add-to-list 'elixir-mode-hook
-             (defun auto-activate-ruby-end-mode-for-elixir-mode ()
-               (set (make-variable-buffer-local 'ruby-end-expand-keywords-before-re)
-                    "\\(?:^\\|\\s-+\\)\\(?:do\\)")
-               (set (make-variable-buffer-local 'ruby-end-check-statement-modifiers) nil)
-               (ruby-end-mode +1)))
-
-;; Elixir adaptation of smartparens
-(sp-with-modes '(elixir-mode)
-  (sp-local-pair "fn" "end"
-         :when '(("SPC" "RET"))
-         :actions '(insert navigate))
-  (sp-local-pair "do" "end"
-         :when '(("SPC" "RET"))
-         :post-handlers '(sp-ruby-def-post-handler)
-         :actions '(insert navigate)))
-
-;;
-;; Elm support
-;;
-
-;; autocompletion support through elm-oracle (node-based)
-(add-hook 'elm-mode-hook #'elm-oracle-setup-completion)
-(add-to-list 'company-backends 'company-elm)
-
-(require 'elm-mode)
 
 ;; flyspell setup
 (add-hook 'text-mode-hook 'flyspell-mode)
