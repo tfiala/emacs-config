@@ -8,6 +8,7 @@ backups/
 elpa/
 eshell/
 places
+transient/
 url/
 /projectile-bookmarks.eld
 /network-security.data
