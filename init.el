@@ -33,7 +33,8 @@
 	 org-journal
 	 paredit
 	 projectile
-	 rainbow-delimiters)))
+	 rainbow-delimiters
+	 slime)))
   (dolist (p packages)
     (when (not (package-installed-p p))
       (package-install p))))
@@ -190,6 +191,16 @@
 (show-paren-mode 1)
 
 ;;
+;; Setup Lisp
+;;
+
+(setq inferior-lisp-program "/usr/local/bin/sbcl")
+(setq slime-lisp-implementations
+      '((sbcl ("sbcl" "--core" "/Users/tfiala/bin/sbcl.core-for-slime"))))
+(setq slime-contribs '(slime-fancy slime-banner))
+(require 'slime-autoloads)
+
+;;
 ;; Setup projectile
 ;;
 
@@ -298,3 +309,17 @@ Added: %U")
 ;; flyspell setup
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (slime smartparens ruby-end rainbow-delimiters paredit org-journal ob-elixir magit helm-projectile haskell-mode exec-path-from-shell elm-mode color-theme-solarized cider alchemist))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
