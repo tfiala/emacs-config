@@ -194,9 +194,26 @@
 ;; Setup Lisp
 ;;
 
-(setq inferior-lisp-program "/usr/local/bin/sbcl")
+(require 'subr-x)
+
+(defun tfiala-slime-lisp-for-maybe (name lisp-binary &optional core-arg core-file)
+  (when-let ((lisp-binary-full-path (executable-find lisp-binary))
+	     (name-sym (intern name)))
+    (if-let* ((core-file-path (and core-file (expand-file-name core-file)))
+	      (_ (file-readable-p core-file-path)))
+	`(,name-sym (,lisp-binary-full-path ,core-arg ,core-file-path))
+      `(,name-sym (,lisp-binary-full-path)))))
+
+(setq tfiala-lisps
+      `(("clozure" "ccl64" "--image-name" "~/bin/ccl.core-for-slime")
+	("sbcl" "sbcl" "--core" "~/bin/sbcl.core-for-slime")))
+
 (setq slime-lisp-implementations
-      '((sbcl ("sbcl" "--core" "/Users/tfiala/bin/sbcl.core-for-slime"))))
+      (seq-remove #'null
+		  (mapcar (lambda (lisp-desc)
+			    (apply #'tfiala-slime-lisp-for-maybe lisp-desc))
+			  tfiala-lisps)))
+
 (setq slime-contribs '(slime-fancy slime-banner))
 (require 'slime-autoloads)
 
