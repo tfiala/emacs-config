@@ -29,12 +29,14 @@
 	 helm
 	 helm-projectile
 	 magit
+	 markdown-mode
 	 ;; org
 	 org-journal
 	 paredit
 	 projectile
 	 rainbow-delimiters
-	 slime)))
+	 slime
+	 )))
   (dolist (p packages)
     (when (not (package-installed-p p))
       (package-install p))))
@@ -47,6 +49,11 @@
   (require 'exec-path-from-shell)
   (exec-path-from-shell-initialize)
   (exec-path-from-shell-copy-env "EDITOR"))
+
+;;
+;; Backup file handling
+;;
+(setq backup-directory-alist `(("." . "~/.saves")))
 
 ;;
 ;; Keyboard setup
@@ -68,7 +75,7 @@
 (when window-system
   (let* ((font-size
 	  (or (and (boundp 'tfiala-fontsize) tfiala-fontsize)
-	      16))
+	      13))
          (font-name (format "Source Code Pro-%d" font-size)))
     (print (concat "using font " font-name))
     (add-to-list 'default-frame-alist `(font . ,font-name))))
@@ -206,7 +213,8 @@
 
 (setq tfiala-lisps
       `(("clozure" "ccl64" "--image-name" "~/bin/ccl.core-for-slime")
-	("sbcl" "sbcl" "--core" "~/bin/sbcl.core-for-slime")))
+	("sbcl" "sbcl" "--core" "~/bin/sbcl.core-for-slime")
+	("lispworks" "lispworks-tty")))
 
 (setq slime-lisp-implementations
       (seq-remove #'null
@@ -323,9 +331,61 @@ Added: %U")
 (setq org-journal-carryover-items nil)
 (require 'org-journal)
 
+;;
+;; C/C++ styles
+;;
+
+
+;; Add a cc-mode style for editing LLVM C and C++ code
+(defun llvm-lineup-statement (langelem)
+  (let ((in-assign (c-lineup-assignments langelem)))
+    (if (not in-assign)
+        '++
+      (aset in-assign 0
+            (+ (aref in-assign 0)
+               (* 2 c-basic-offset)))
+      in-assign)))
+
+(c-add-style "llvm.org"
+             '("gnu"
+	       (fill-column . 80)
+	       (c++-indent-level . 2)
+	       (c-basic-offset . 2)
+	       (indent-tabs-mode . nil)
+	       (c-offsets-alist . ((arglist-intro . ++)
+				   (innamespace . 0)
+				   (member-init-intro . ++)
+				   (statement-cont . llvm-lineup-statement)))))
+
+(c-add-style "tfiala"
+             '("gnu"
+	       (fill-column . 80)
+	       (c++-indent-level . 4)
+	       (c-basic-offset . 4)
+	       (indent-tabs-mode . nil)
+	       (c-offsets-alist . ((arglist-intro . ++)
+				   (innamespace . 0)
+				   (member-init-intro . ++)
+				   (statement-cont . llvm-lineup-statement)))))
+
+(setq c-default-style "tfiala")
+
+;; Files with "llvm" in their names will automatically be set to the
+;; llvm.org coding style.
+(add-hook 'c-mode-common-hook
+	  (function
+	   (lambda nil 
+	     (if (string-match "llvm" buffer-file-name)
+		 (progn
+		   (c-set-style "llvm.org"))))))
+
 ;; flyspell setup
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+
+;; markdown-mode
+(setq markdown-command "/usr/local/bin/pandoc")
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -340,3 +400,4 @@ Added: %U")
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'narrow-to-region 'disabled nil)
