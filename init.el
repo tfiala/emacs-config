@@ -23,7 +23,7 @@
 (let ((packages
        '(cider
 	 clojure-mode
-	 color-theme-solarized
+	 ;; color-theme-solarized
 	 company
 	 exec-path-from-shell
 	 helm
@@ -75,8 +75,8 @@
 (when window-system
   (let* ((font-size
 	  (or (and (boundp 'tfiala-fontsize) tfiala-fontsize)
-	      13))
-         (font-name (format "Source Code Pro-%d" font-size)))
+	 (font-name (format "MesloLGM Nerd Font-%d" font-size))
+	 )
     (print (concat "using font " font-name))
     (add-to-list 'default-frame-alist `(font . ,font-name))))
 
@@ -106,34 +106,6 @@
 (global-set-key (kbd "C-c w") 'whitespace-mode)
 (global-set-key (kbd "C-c t") 'whitespace-toggle-options)
 
-;;
-;; Setup color theme
-;;
-
-(defun solarized-is-light-p ()
-  (if window-system
-      (eq (frame-parameter (selected-frame) 'background-mode) 'light)
-    (eq (terminal-parameter nil 'background-mode) 'light)))
-
-(defun solarized-set (use-light)
-  (let ((background (if use-light 'light 'dark)))
-    (set-frame-parameter nil 'background-mode background)
-    (when (not window-system)
-      (set-terminal-parameter nil 'background-mode background)))
-  (enable-theme 'solarized))
-
-(defun solarized-toggle ()
-  (interactive)
-  (solarized-set (not (solarized-is-light-p))))
-
-(require 'color-theme-solarized)
-(load-theme 'solarized t)
-
-(global-set-key (kbd "C-c s") 'solarized-toggle)
-
-;; Initialize solarized to env-var SOLARIZED, which should be
-;; "light" or "dark".  When not set, use "light".
-(solarized-set (string= (or (getenv "SOLARIZED") "light") "light"))
 
 ;;
 ;; Setup dired
@@ -401,3 +373,7 @@ Added: %U")
  ;; If there is more than one, they won't work right.
  )
 (put 'narrow-to-region 'disabled nil)
+
+;; specify lisp program
+;; (setq inferior-lisp-program "/Users/tfiala/bin/lw-7.1-console")
+(setq inferior-lisp-program "/Users/tfiala/bin/lw-8.0-console")
