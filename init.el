@@ -22,6 +22,7 @@
 ;; Install packages.
 (let ((packages
        '(company
+	 doom-themes
 	 exec-path-from-shell
 	 helm
 	 helm-projectile
@@ -33,10 +34,14 @@
 	 projectile
 	 rainbow-delimiters
 	 slime
+	 use-package
 	 )))
   (dolist (p packages)
     (when (not (package-installed-p p))
       (package-install p))))
+
+(eval-when-compile
+  (require 'use-package))
 
 ;;
 ;; Get exec-path setup right
@@ -182,7 +187,9 @@
 (setq tfiala-lisps
       `(("clozure" "ccl64" "--image-name" "~/bin/ccl.core-for-slime")
 	("sbcl" "sbcl" "--core" "~/bin/sbcl.core-for-slime")
-	("lispworks" "lispworks-tty")))
+	("lw8" "~/bin/lw-8.0-console")
+	("lw7" "~/bin/lw-7.1-console"))
+      )
 
 (setq slime-lisp-implementations
       (seq-remove #'null
@@ -359,3 +366,37 @@ Added: %U")
     ;; specify lisp program
     ;; (setq inferior-lisp-program "/Users/tfiala/bin/lw-7.1-console")
     (setq inferior-lisp-program "/Users/tfiala/bin/lw-8.0-console")
+
+;;
+;; color themes
+;;
+(use-package doom-themes
+  :ensure t
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-one t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Enable custom neotree theme (all-the-icons must be installed!)
+  (doom-themes-neotree-config)
+  ;; or for treemacs users
+  (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+  (doom-themes-treemacs-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(use-package slime rainbow-delimiters paredit org-journal markdown-mode magit helm-projectile exec-path-from-shell doom-themes company cider)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
