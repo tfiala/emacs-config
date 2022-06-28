@@ -111,8 +111,10 @@
 ;;
 ;; Setup dired
 ;;
+(when-let ((dir-program (executable-find "gls")))
+  (print (concat "found gls directory program: " dir-program))
+  (setq insert-directory-program dir-program))
 
-(setq insert-directory-program "/usr/local/bin/gls")
 (setq dired-listing-switches "-aBhl --group-directories-first")
 
 ;; Use dired-x
