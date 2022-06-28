@@ -21,10 +21,7 @@
 
 ;; Install packages.
 (let ((packages
-       '(cider
-	 clojure-mode
-	 ;; color-theme-solarized
-	 company
+       '(company
 	 exec-path-from-shell
 	 helm
 	 helm-projectile
@@ -74,9 +71,8 @@
 
 (when window-system
   (let* ((font-size
-	  (or (and (boundp 'tfiala-fontsize) tfiala-fontsize)
-	 (font-name (format "MesloLGM Nerd Font-%d" font-size))
-	 )
+	  (or (and (boundp 'tfiala-fontsize) tfiala-fontsize) 14))
+	 (font-name (format "MesloLGM Nerd Font-%d" font-size)))
     (print (concat "using font " font-name))
     (add-to-list 'default-frame-alist `(font . ,font-name))))
 
@@ -275,24 +271,24 @@
 (setq org-agenda-file-regexp "\\`[^.].*\\.org\\'\\|[0-9]+\\'")
 (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
 (setq org-capture-templates
-    '(("a" "Appointment" entry (file+headline
-				"taskdiary.org" "Calendar")
-       "* APPT %^{Description} %^g
+      '(("a" "Appointment" entry (file+headline
+				  "taskdiary.org" "Calendar")
+	 "* APPT %^{Description} %^g
 %?
 Added: %U")
-      ("n" "Notes" entry (file+datetree
-			  "taskdiary.org")
-       "* %^{Description} %^g %?
+	("n" "Notes" entry (file+datetree
+			    "taskdiary.org")
+	 "* %^{Description} %^g %?
 Added: %U")
-      ("t" "Task Diary" entry (file+datetree
-			       "taskdiary.org")
-       "* TODO %^{Description}  %^g
+	("t" "Task Diary" entry (file+datetree
+				 "taskdiary.org")
+	 "* TODO %^{Description}  %^g
 %?
 Added: %U")
-      ("l" "Log Time" entry (file+datetree
-			     "timelog.org" )
-       "** %U - %^{Activity}  :TIME:")
-      ))
+	("l" "Log Time" entry (file+datetree
+			       "timelog.org" )
+	 "** %U - %^{Activity}  :TIME:")
+	))
 
 ;; org-journal
 (setq org-journal-dir (concat org-directory "journal/"))
@@ -314,12 +310,12 @@ Added: %U")
     (if (not in-assign)
         '++
       (aset in-assign 0
-            (+ (aref in-assign 0)
-               (* 2 c-basic-offset)))
+	    (+ (aref in-assign 0)
+	       (* 2 c-basic-offset)))
       in-assign)))
 
 (c-add-style "llvm.org"
-             '("gnu"
+	     '("gnu"
 	       (fill-column . 80)
 	       (c++-indent-level . 2)
 	       (c-basic-offset . 2)
@@ -330,7 +326,7 @@ Added: %U")
 				   (statement-cont . llvm-lineup-statement)))))
 
 (c-add-style "tfiala"
-             '("gnu"
+	     '("gnu"
 	       (fill-column . 80)
 	       (c++-indent-level . 4)
 	       (c-basic-offset . 4)
@@ -351,29 +347,15 @@ Added: %U")
 		 (progn
 		   (c-set-style "llvm.org"))))))
 
-;; flyspell setup
-(add-hook 'text-mode-hook 'flyspell-mode)
-(add-hook 'prog-mode-hook 'flyspell-prog-mode)
+    ;; flyspell setup
+    (add-hook 'text-mode-hook 'flyspell-mode)
+    (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
-;; markdown-mode
-(setq markdown-command "/usr/local/bin/pandoc")
+    ;; markdown-mode
+    (setq markdown-command "/usr/local/bin/pandoc")
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (slime smartparens ruby-end rainbow-delimiters paredit org-journal ob-elixir magit helm-projectile haskell-mode exec-path-from-shell elm-mode color-theme-solarized cider alchemist))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-(put 'narrow-to-region 'disabled nil)
+    (put 'narrow-to-region 'disabled nil)
 
-;; specify lisp program
-;; (setq inferior-lisp-program "/Users/tfiala/bin/lw-7.1-console")
-(setq inferior-lisp-program "/Users/tfiala/bin/lw-8.0-console")
+    ;; specify lisp program
+    ;; (setq inferior-lisp-program "/Users/tfiala/bin/lw-7.1-console")
+    (setq inferior-lisp-program "/Users/tfiala/bin/lw-8.0-console")
